@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quà Tặng Cho Em</title>
+    <title>Ngô Thị Thiên Trang</title>
     <style>
         body {
             background-color: black;
@@ -19,6 +19,7 @@
         .gift-container {
             text-align: center;
             cursor: pointer;
+            position: relative;
         }
         .gift-box {
             width: 200px;
@@ -26,6 +27,17 @@
             background: url('https://cdn-icons-png.flaticon.com/512/2331/2331945.png') no-repeat center;
             background-size: cover;
             margin-bottom: 10px;
+            position: relative;
+        }
+        .gift-lid {
+            width: 200px;
+            height: 50px;
+            background: url('https://cdn-icons-png.flaticon.com/512/2331/2331946.png') no-repeat center;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.5s ease-in-out;
         }
         .gift-text {
             font-size: 20px;
@@ -42,14 +54,19 @@
     </style>
     <script>
         function showFireworks() {
-            document.querySelector('.gift-container').style.display = 'none';
-            document.querySelector('.fireworks').style.display = 'block';
+            document.querySelector('.gift-lid').style.transform = 'translateY(-100px) rotate(-15deg)';
+            setTimeout(() => {
+                document.querySelector('.gift-container').style.display = 'none';
+                document.querySelector('.fireworks').style.display = 'block';
+            }, 800);
         }
     </script>
 </head>
 <body>
     <div class="gift-container" onclick="showFireworks()">
-        <div class="gift-box"></div>
+        <div class="gift-box">
+            <div class="gift-lid"></div>
+        </div>
         <div class="gift-text">Bấm vào để nhận quà</div>
     </div>
     <canvas class="fireworks" id="fireworksCanvas"></canvas>
