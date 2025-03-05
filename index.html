@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quà Tặng Cho Em</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .gift-container {
+            text-align: center;
+            cursor: pointer;
+        }
+        .gift-box {
+            width: 200px;
+            height: 200px;
+            background: url('https://cdn-icons-png.flaticon.com/512/2331/2331945.png') no-repeat center;
+            background-size: cover;
+            margin-bottom: 10px;
+        }
+        .gift-text {
+            font-size: 20px;
+        }
+        .fireworks {
+            display: none;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+    <script>
+        function showFireworks() {
+            document.querySelector('.gift-container').style.display = 'none';
+            document.querySelector('.fireworks').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <div class="gift-container" onclick="showFireworks()">
+        <div class="gift-box"></div>
+        <div class="gift-text">Bấm vào để nhận quà</div>
+    </div>
+    <canvas class="fireworks" id="fireworksCanvas"></canvas>
+    
+    <script>
+        const canvas = document.getElementById("fireworksCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let particles = [];
+        
+        function createFirework() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height / 2;
+            const colors = ["#ff0", "#f00", "#0f0", "#00f", "#f0f"];
+            for (let i = 0; i < 50; i++) {
+                particles.push({
+                    x,
+                    y,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 3 + 1,
+                    speedX: (Math.random() - 0.5) * 6,
+                    speedY: (Math.random() - 0.5) * 6,
+                    life: 100
+                });
+            }
+        }
+        
+        function animateFireworks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.life--;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                if (p.life <= 0) particles.splice(i, 1);
+            });
+            requestAnimationFrame(animateFireworks);
+        }
+        
+        setInterval(createFirework, 500);
+        animateFireworks();
+    </script>
+</body>
+</html>
